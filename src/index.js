@@ -37,8 +37,42 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+const LETTER_LENGTH = 10;
+
 function decode(expr) {
-    // write your solution here
+    let sentence = '';
+    let morseLetter;
+    for(let i = 0; i < expr.length; i+=10){
+        morseLetter = decodeCodeInMorse(expr.slice(i, i+10));
+        sentence += decodeMorseInLetter(morseLetter);
+    }
+    return sentence;
+}
+
+// str is string with length = 10
+function decodeCodeInMorse(str){
+    let letter = '';
+
+    if(str === "**********") {
+        return " ";
+    }
+
+    for(let i = 0; i < LETTER_LENGTH; i += 2){
+        if(str.slice(i, i+2) === '10'){
+            letter += '.';
+        } else if(str.slice(i, i+2) === '11') {
+            letter += '-'
+        }
+    }
+    return letter;
+}
+
+function decodeMorseInLetter(str){
+    if(str === ' '){
+        return ' ';
+    }
+
+    return MORSE_TABLE[str];
 }
 
 module.exports = {
